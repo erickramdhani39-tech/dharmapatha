@@ -5,20 +5,35 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar, Clock, User, CheckCircle } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 import consultationIcon from "@/assets/consultation-icon.jpg";
 
 const Consultation = () => {
   const { toast } = useToast();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
     topic: "",
     message: "",
     date: "",
   });
+
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!user) {
+      toast({
+        title: "Login Diperlukan",
+        description: "Silakan login terlebih dahulu untuk menjadwalkan konsultasi",
+        variant: "destructive",
+      });
+      navigate("/auth");
+    }
+  }, [user, navigate, toast]);
 
   const topics = [
     "Tes Minat & Kepribadian",
@@ -30,21 +45,58 @@ const Consultation = () => {
     "Lainnya",
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Pendaftaran Berhasil!",
-      description: "Tim kami akan menghubungi Anda dalam 1x24 jam untuk konfirmasi jadwal konsultasi.",
-    });
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      topic: "",
-      message: "",
-      date: "",
-    });
+
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "Anda harus login terlebih dahulu",
+        variant: "destructive",
+      });
+      navigate("/auth");
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.from("consultations").insert({
+        user_id: user.id,
+        topic: formData.topic,
+        preferred_date: formData.date || null,
+        message: formData.message || null,
+        status: "pending",
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Pendaftaran Berhasil!",
+        description: "Tim kami akan menghubungi Anda dalam 1x24 jam untuk konfirmasi jadwal konsultasi.",
+      });
+
+      // Reset form
+      setFormData({
+        topic: "",
+        message: "",
+        date: "",
+      });
+
+      // Redirect to dashboard after a short delay
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } catch (error: any) {
+      console.error("Error submitting consultation:", error);
+      toast({
+        title: "Error",
+        description: error.message || "Gagal menyimpan data konsultasi",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const benefits = [
@@ -127,40 +179,6 @@ const Consultation = () => {
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Nama Lengkap *</Label>
-                    <Input
-                      id="name"
-                      placeholder="Masukkan nama lengkap Anda"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="email@example.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Nomor Telepon *</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="08xxxxxxxxxx"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      required
-                    />
-                  </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="topic">Topik Konsultasi *</Label>
@@ -207,8 +225,13 @@ const Consultation = () => {
                     />
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full bg-gradient-primary">
-                    Kirim Pendaftaran
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-gradient-primary"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Memproses..." : "Kirim Pendaftaran"}
                   </Button>
 
                   <p className="text-xs text-center text-muted-foreground">
