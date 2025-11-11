@@ -1,10 +1,30 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Calendar, Target, Lightbulb, Code, Briefcase, PenTool, DollarSign } from "lucide-react";
+import { TrendingUp, Calendar, Target, Lightbulb, Code, Briefcase, PenTool, DollarSign, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import switchCareerIcon from "@/assets/switch-career-icon.jpg";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const SwitchCareer = () => {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const { data, error } = await supabase
+        .from('career_guides')
+        .select('*')
+        .eq('target_audience', 'Career Switcher')
+        .order('created_at', { ascending: false });
+      
+      if (data) setArticles(data);
+      setLoading(false);
+    };
+    
+    fetchArticles();
+  }, []);
+
   const timeline = [
     { month: "Bulan 1-2", title: "Self-Assessment & Research", description: "Identifikasi skill, minat, dan riset industri target" },
     { month: "Bulan 3-4", title: "Skill Development", description: "Pelajari skill baru melalui kursus dan praktik" },
@@ -38,20 +58,6 @@ const SwitchCareer = () => {
     { icon: Briefcase, title: "Business", description: "Product Manager, Business Analyst, Consultant", growth: "High" },
   ];
 
-  const articles = [
-    {
-      title: "Cara Beralih Karier Tanpa Takut",
-      description: "Strategi mental dan praktis untuk memulai transisi karier dengan confidence",
-    },
-    {
-      title: "Skill Transfer yang Bernilai Tinggi",
-      description: "Identifikasi transferable skills yang membuat Anda competitive di industri baru",
-    },
-    {
-      title: "Membangun Portfolio untuk Career Switcher",
-      description: "Tips praktis membuat portfolio yang meyakinkan meskipun tanpa pengalaman formal",
-    },
-  ];
 
   return (
     <div className="min-h-screen">
@@ -198,22 +204,37 @@ const SwitchCareer = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {articles.map((article, index) => (
-              <Card key={index} className="hover:shadow-medium transition-shadow">
-                <CardHeader>
-                  <div className="h-48 bg-gradient-accent rounded-lg mb-4" />
-                  <CardTitle className="text-xl">{article.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base mb-4">
-                    {article.description}
-                  </CardDescription>
-                  <Button variant="link" className="p-0 text-primary">
-                    Baca Artikel →
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+            {loading ? (
+              <div className="col-span-3 text-center text-muted-foreground">Memuat artikel...</div>
+            ) : articles.length > 0 ? (
+              articles.map((article) => (
+                <Card key={article.id} className="hover:shadow-medium transition-shadow">
+                  <CardHeader>
+                    <div className="h-48 bg-gradient-accent rounded-lg mb-4 flex items-center justify-center">
+                      <BookOpen className="h-16 w-16 text-white/50" />
+                    </div>
+                    <CardTitle className="text-xl">{article.title}</CardTitle>
+                    {article.category && (
+                      <div className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold w-fit">
+                        {article.category}
+                      </div>
+                    )}
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base mb-4">
+                      {article.description}
+                    </CardDescription>
+                    <Button variant="link" className="p-0 text-primary">
+                      Baca Artikel →
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="col-span-3 text-center text-muted-foreground">
+                Belum ada artikel tersedia
+              </div>
+            )}
           </div>
         </div>
       </section>

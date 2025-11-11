@@ -3,8 +3,28 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, FileText, Linkedin, Users, Briefcase, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import freshgradIcon from "@/assets/freshgrad-icon.jpg";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const FreshGraduate = () => {
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const { data, error } = await supabase
+        .from('career_guides')
+        .select('*')
+        .eq('target_audience', 'Fresh Graduate')
+        .order('created_at', { ascending: false });
+      
+      if (data) setArticles(data);
+      setLoading(false);
+    };
+    
+    fetchArticles();
+  }, []);
+
   const checklist = [
     { icon: FileText, title: "Buat CV Profesional", description: "Template dan panduan lengkap untuk CV yang menarik perhatian recruiter" },
     { icon: Linkedin, title: "Optimasi Profil LinkedIn", description: "Bangun personal branding yang kuat di platform profesional" },
@@ -13,23 +33,6 @@ const FreshGraduate = () => {
     { icon: BookOpen, title: "Skill Development", description: "Identifikasi dan kembangkan skill yang dibutuhkan industri" },
   ];
 
-  const articles = [
-    {
-      title: "Langkah Awal Setelah Lulus",
-      description: "Panduan lengkap untuk memulai karier profesional Anda setelah lulus kuliah",
-      readTime: "5 min",
-    },
-    {
-      title: "Membangun CV Pertamamu",
-      description: "Template dan tips praktis untuk membuat CV yang stand out dari kompetitor",
-      readTime: "7 min",
-    },
-    {
-      title: "Strategi Job Hunting untuk Fresh Graduate",
-      description: "Cara efektif mencari pekerjaan pertama dan memanfaatkan semua channel yang tersedia",
-      readTime: "8 min",
-    },
-  ];
 
   return (
     <div className="min-h-screen">
@@ -103,25 +106,37 @@ const FreshGraduate = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {articles.map((article, index) => (
-              <Card key={index} className="hover:shadow-medium transition-shadow">
-                <CardHeader>
-                  <div className="h-48 bg-gradient-primary rounded-lg mb-4" />
-                  <CardTitle className="text-xl">{article.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base mb-4">
-                    {article.description}
-                  </CardDescription>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">{article.readTime} baca</span>
+            {loading ? (
+              <div className="col-span-3 text-center text-muted-foreground">Memuat artikel...</div>
+            ) : articles.length > 0 ? (
+              articles.map((article) => (
+                <Card key={article.id} className="hover:shadow-medium transition-shadow">
+                  <CardHeader>
+                    <div className="h-48 bg-gradient-primary rounded-lg mb-4 flex items-center justify-center">
+                      <BookOpen className="h-16 w-16 text-white/50" />
+                    </div>
+                    <CardTitle className="text-xl">{article.title}</CardTitle>
+                    {article.category && (
+                      <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold w-fit">
+                        {article.category}
+                      </div>
+                    )}
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base mb-4">
+                      {article.description}
+                    </CardDescription>
                     <Button variant="link" className="p-0 text-primary">
                       Baca Artikel →
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="col-span-3 text-center text-muted-foreground">
+                Belum ada artikel tersedia
+              </div>
+            )}
           </div>
         </div>
       </section>
