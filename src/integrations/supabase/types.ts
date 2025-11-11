@@ -14,114 +14,122 @@ export type Database = {
   }
   public: {
     Tables: {
-      career_progress: {
+      career_guides: {
         Row: {
-          completed: boolean | null
-          completed_at: string | null
-          created_at: string | null
+          author_id: string | null
+          category: string | null
+          created_at: string
           description: string | null
-          id: string
-          milestone_type: string
-          target_date: string | null
-          title: string
-          updated_at: string | null
-          user_id: string
+          id: number
+          target_audeince: string | null
+          title: string | null
         }
         Insert: {
-          completed?: boolean | null
-          completed_at?: string | null
-          created_at?: string | null
+          author_id?: string | null
+          category?: string | null
+          created_at?: string
           description?: string | null
-          id?: string
-          milestone_type: string
-          target_date?: string | null
-          title: string
-          updated_at?: string | null
-          user_id: string
+          id?: number
+          target_audeince?: string | null
+          title?: string | null
         }
         Update: {
-          completed?: boolean | null
-          completed_at?: string | null
-          created_at?: string | null
+          author_id?: string | null
+          category?: string | null
+          created_at?: string
           description?: string | null
-          id?: string
-          milestone_type?: string
-          target_date?: string | null
-          title?: string
-          updated_at?: string | null
-          user_id?: string
+          id?: number
+          target_audeince?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "career_guides_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "Profile"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consultation: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: number
+          message: string | null
+          name: string | null
+          status: string | null
+          topic: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: number
+          message?: string | null
+          name?: string | null
+          status?: string | null
+          topic?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: number
+          message?: string | null
+          name?: string | null
+          status?: string | null
+          topic?: string | null
         }
         Relationships: []
       }
-      consultations: {
+      Profile: {
         Row: {
           created_at: string | null
+          email: string | null
           id: string
-          mentor_name: string | null
-          message: string | null
-          notes: string | null
-          preferred_date: string | null
-          scheduled_date: string | null
-          status: string | null
-          topic: string
-          updated_at: string | null
-          user_id: string
+          name: string | null
+          role: string | null
         }
         Insert: {
           created_at?: string | null
+          email?: string | null
           id?: string
-          mentor_name?: string | null
-          message?: string | null
-          notes?: string | null
-          preferred_date?: string | null
-          scheduled_date?: string | null
-          status?: string | null
-          topic: string
-          updated_at?: string | null
-          user_id: string
+          name?: string | null
+          role?: string | null
         }
         Update: {
           created_at?: string | null
+          email?: string | null
           id?: string
-          mentor_name?: string | null
-          message?: string | null
-          notes?: string | null
-          preferred_date?: string | null
-          scheduled_date?: string | null
-          status?: string | null
-          topic?: string
-          updated_at?: string | null
-          user_id?: string
+          name?: string | null
+          role?: string | null
         }
         Relationships: []
       }
       profiles: {
         Row: {
           avatar_url: string | null
-          created_at: string | null
-          email: string
-          full_name: string
+          created_at: string
+          full_name: string | null
           id: string
-          phone: string | null
-          updated_at: string | null
+          updated_at: string
+          user_id: string
         }
         Insert: {
           avatar_url?: string | null
-          created_at?: string | null
-          email: string
-          full_name: string
+          created_at?: string
+          full_name?: string | null
           id: string
-          phone?: string | null
-          updated_at?: string | null
+          updated_at?: string
+          user_id: string
         }
         Update: {
           avatar_url?: string | null
-          created_at?: string | null
-          email?: string
-          full_name?: string
+          created_at?: string
+          full_name?: string | null
           id?: string
-          phone?: string | null
-          updated_at?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
