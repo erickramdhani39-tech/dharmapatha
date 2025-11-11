@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, User, LogOut, LayoutDashboard } from "lucide-react";
+import logo from "@/assets/logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   DropdownMenu,
@@ -28,10 +29,8 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border shadow-soft">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Dharmapatha
-            </span>
+          <Link to="/" className="flex items-center space-x-3">
+            <img src={logo} alt="Dharmapatha Logo" className="h-10" />
           </Link>
 
           {/* Desktop Navigation */}
