@@ -62,32 +62,29 @@ const Dashboard = () => {
     try {
       setLoading(true);
 
-      // Fetch profile
-      const { data: profileData } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user!.id)
-        .single();
+      // Fetch profile - TODO: Create profiles table
+      // const { data: profileData } = await supabase
+      //   .from("profiles")
+      //   .select("*")
+      //   .eq("id", user!.id)
+      //   .single();
+      // if (profileData) setProfile(profileData);
 
-      if (profileData) setProfile(profileData);
+      // Fetch consultations - TODO: Create consultations table
+      // const { data: consultationsData } = await supabase
+      //   .from("consultations")
+      //   .select("*")
+      //   .eq("user_id", user!.id)
+      //   .order("created_at", { ascending: false });
+      // if (consultationsData) setConsultations(consultationsData);
 
-      // Fetch consultations
-      const { data: consultationsData } = await supabase
-        .from("consultations")
-        .select("*")
-        .eq("user_id", user!.id)
-        .order("created_at", { ascending: false });
-
-      if (consultationsData) setConsultations(consultationsData);
-
-      // Fetch career progress
-      const { data: progressData } = await supabase
-        .from("career_progress")
-        .select("*")
-        .eq("user_id", user!.id)
-        .order("created_at", { ascending: false });
-
-      if (progressData) setCareerProgress(progressData);
+      // Fetch career progress - TODO: Create career_progress table
+      // const { data: progressData } = await supabase
+      //   .from("career_progress")
+      //   .select("*")
+      //   .eq("user_id", user!.id)
+      //   .order("created_at", { ascending: false });
+      // if (progressData) setCareerProgress(progressData);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     } finally {

@@ -12,7 +12,7 @@ const SwitchCareer = () => {
 
   useEffect(() => {
     const fetchArticles = async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('career_guides')
         .select('*')
         .eq('target_audience', 'Career Switcher')
