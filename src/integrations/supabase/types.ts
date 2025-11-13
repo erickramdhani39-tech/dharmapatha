@@ -21,7 +21,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: number
-          target_audeince: string | null
+          target_audience: string | null
           title: string | null
         }
         Insert: {
@@ -30,7 +30,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: number
-          target_audeince?: string | null
+          target_audience?: string | null
           title?: string | null
         }
         Update: {
@@ -39,18 +39,10 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: number
-          target_audeince?: string | null
+          target_audience?: string | null
           title?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "career_guides_author_id_fkey"
-            columns: ["author_id"]
-            isOneToOne: false
-            referencedRelation: "Profile"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       consultation: {
         Row: {
@@ -82,30 +74,6 @@ export type Database = {
         }
         Relationships: []
       }
-      Profile: {
-        Row: {
-          created_at: string | null
-          email: string | null
-          id: string
-          name: string | null
-          role: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          email?: string | null
-          id?: string
-          name?: string | null
-          role?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          email?: string | null
-          id?: string
-          name?: string | null
-          role?: string | null
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -119,7 +87,7 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string
           full_name?: string | null
-          id: string
+          id?: string
           updated_at?: string
           user_id: string
         }
