@@ -62,23 +62,24 @@ const Dashboard = () => {
     try {
       setLoading(true);
 
-      // Fetch profile - TODO: Create profiles table
-      // const { data: profileData } = await supabase
-      //   .from("profiles")
-      //   .select("*")
-      //   .eq("id", user!.id)
-      //   .single();
-      // if (profileData) setProfile(profileData);
+      // Fetch profile
+      const { data: profileData } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user!.id)
+        .maybeSingle();
+      if (profileData) setProfile(profileData as any);
 
-      // Fetch consultations - TODO: Create consultations table
-      // const { data: consultationsData } = await supabase
-      //   .from("consultations")
-      //   .select("*")
-      //   .eq("user_id", user!.id)
-      //   .order("created_at", { ascending: false });
-      // if (consultationsData) setConsultations(consultationsData);
+      // Fetch consultations - Note: consultation table doesn't have user_id
+      // Filtering by email since the table structure uses email instead
+      const { data: consultationsData } = await supabase
+        .from("consultation")
+        .select("*")
+        .eq("email", user!.email)
+        .order("created_at", { ascending: false });
+      if (consultationsData) setConsultations(consultationsData as any);
 
-      // Fetch career progress - TODO: Create career_progress table
+      // Career progress - TODO: Create career_progress table for milestone tracking
       // const { data: progressData } = await supabase
       //   .from("career_progress")
       //   .select("*")

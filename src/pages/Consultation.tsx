@@ -61,15 +61,15 @@ const Consultation = () => {
     setIsLoading(true);
 
     try {
-      // TODO: Uncomment after creating consultations table
-      // const { error } = await supabase.from("consultations").insert({
-      //   user_id: user.id,
-      //   topic: formData.topic,
-      //   preferred_date: formData.date || null,
-      //   message: formData.message || null,
-      //   status: "pending",
-      // });
-      // if (error) throw error;
+      const { error } = await supabase.from("consultation").insert({
+        name: user.email?.split('@')[0] || 'User',
+        email: user.email || '',
+        topic: formData.topic,
+        message: formData.message || null,
+        status: "pending",
+      });
+      
+      if (error) throw error;
 
       toast({
         title: "Pendaftaran Berhasil!",

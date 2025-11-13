@@ -15,7 +15,7 @@ const SwitchCareer = () => {
       const { data, error } = await (supabase as any)
         .from('career_guides')
         .select('*')
-        .eq('target_audience', 'Career Switcher')
+        .eq('target_audience', 'career_switcher')
         .order('created_at', { ascending: false });
       
       if (data) setArticles(data);

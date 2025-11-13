@@ -15,7 +15,7 @@ const FreshGraduate = () => {
       const { data, error } = await (supabase as any)
         .from('career_guides')
         .select('*')
-        .eq('target_audience', 'Fresh Graduate')
+        .eq('target_audience', 'fresh_graduate')
         .order('created_at', { ascending: false });
       
       if (data) setArticles(data);
