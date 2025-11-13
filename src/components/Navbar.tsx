@@ -30,7 +30,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20 sm:h-24">
           <Link to="/" className="flex items-center py-2">
-            <img src={logo} alt="Dharmapatha Logo" className="h-12 sm:h-16 w-auto object-contain" />
+            <img src={logo} alt="Dharmapatha Logo" className="h-16 sm:h-20 w-auto object-contain" />
           </Link>
 
           {/* Desktop Navigation */}
