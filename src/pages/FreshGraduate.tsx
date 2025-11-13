@@ -18,7 +18,19 @@ const FreshGraduate = () => {
         .eq('target_audience', 'fresh_graduate')
         .order('created_at', { ascending: false });
       
-      if (data) setArticles(data);
+      if (data) {
+        // Get public URLs for images
+        const articlesWithImages = data.map((article: any) => {
+          if (article.image_url) {
+            const { data: urlData } = supabase.storage
+              .from('career_guides')
+              .getPublicUrl(article.image_url);
+            return { ...article, imagePublicUrl: urlData.publicUrl };
+          }
+          return article;
+        });
+        setArticles(articlesWithImages);
+      }
       setLoading(false);
     };
     
@@ -112,8 +124,16 @@ const FreshGraduate = () => {
               articles.map((article) => (
                 <Card key={article.id} className="hover:shadow-medium transition-shadow">
                   <CardHeader>
-                    <div className="h-48 bg-gradient-primary rounded-lg mb-4 flex items-center justify-center">
-                      <BookOpen className="h-16 w-16 text-white/50" />
+                    <div className="h-48 bg-gradient-primary rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                      {article.imagePublicUrl ? (
+                        <img 
+                          src={article.imagePublicUrl} 
+                          alt={article.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <BookOpen className="h-16 w-16 text-white/50" />
+                      )}
                     </div>
                     <CardTitle className="text-xl">{article.title}</CardTitle>
                     {article.category && (
