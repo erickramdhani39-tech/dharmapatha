@@ -22,10 +22,11 @@ const FreshGraduate = () => {
         // Get public URLs for images
         const articlesWithImages = data.map((article: any) => {
           if (article.image_url) {
-            const { data: urlData } = supabase.storage
-              .from('career_guides')
-              .getPublicUrl(article.image_url);
-            return { ...article, imagePublicUrl: urlData.publicUrl };
+            // Check if image_url is already a full URL or just a path
+            const imageUrl = article.image_url.startsWith('http') 
+              ? article.image_url 
+              : supabase.storage.from('career_guides').getPublicUrl(article.image_url).data.publicUrl;
+            return { ...article, imagePublicUrl: imageUrl };
           }
           return article;
         });
