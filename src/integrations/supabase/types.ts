@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      assessments: {
+        Row: {
+          answers: Json
+          assessment_type: string
+          created_at: string
+          email: string | null
+          id: string
+          recommendations: string | null
+          score: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          answers: Json
+          assessment_type: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          recommendations?: string | null
+          score: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          answers?: Json
+          assessment_type?: string
+          created_at?: string
+          email?: string | null
+          id?: string
+          recommendations?: string | null
+          score?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       career_guides: {
         Row: {
           author_id: string | null

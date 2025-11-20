@@ -16,6 +16,8 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import AdminCareerGuides from "./pages/AdminCareerGuides";
 import ArticleDetail from "./pages/ArticleDetail";
+import AssessmentFreshGrad from "./pages/AssessmentFreshGrad";
+import AssessmentCareerSwitch from "./pages/AssessmentCareerSwitch";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
                 <Route path="/freshgraduate" element={<FreshGraduate />} />
                 <Route path="/switch-career" element={<SwitchCareer />} />
                 <Route path="/artikel/:id" element={<ArticleDetail />} />
+                <Route path="/assessment/freshgrad" element={<AssessmentFreshGrad />} />
+                <Route path="/assessment/careerswitch" element={<AssessmentCareerSwitch />} />
                 <Route path="/konsultasi" element={<Consultation />} />
                 <Route path="/kontak" element={<Contact />} />
                 <Route path="/auth" element={<Auth />} />
