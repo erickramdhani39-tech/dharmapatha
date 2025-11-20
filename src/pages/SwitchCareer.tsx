@@ -245,9 +245,11 @@ const SwitchCareer = () => {
                     <CardDescription className="text-base mb-4">
                       {article.description}
                     </CardDescription>
-                    <Button variant="link" className="p-0 text-primary">
-                      Baca Artikel →
-                    </Button>
+                    <Link to={`/artikel/${article.id}`}>
+                      <Button variant="link" className="p-0 text-primary">
+                        Baca Artikel →
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               ))

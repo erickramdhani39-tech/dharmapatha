@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import AdminCareerGuides from "./pages/AdminCareerGuides";
+import ArticleDetail from "./pages/ArticleDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
                 <Route path="/tentang" element={<About />} />
                 <Route path="/freshgraduate" element={<FreshGraduate />} />
                 <Route path="/switch-career" element={<SwitchCareer />} />
+                <Route path="/artikel/:id" element={<ArticleDetail />} />
                 <Route path="/konsultasi" element={<Consultation />} />
                 <Route path="/kontak" element={<Contact />} />
                 <Route path="/auth" element={<Auth />} />

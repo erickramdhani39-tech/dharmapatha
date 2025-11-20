@@ -18,6 +18,7 @@ export type Database = {
         Row: {
           author_id: string | null
           category: string | null
+          content: string | null
           created_at: string
           description: string | null
           id: number
@@ -28,6 +29,7 @@ export type Database = {
         Insert: {
           author_id?: string | null
           category?: string | null
+          content?: string | null
           created_at?: string
           description?: string | null
           id?: number
@@ -38,6 +40,7 @@ export type Database = {
         Update: {
           author_id?: string | null
           category?: string | null
+          content?: string | null
           created_at?: string
           description?: string | null
           id?: number
