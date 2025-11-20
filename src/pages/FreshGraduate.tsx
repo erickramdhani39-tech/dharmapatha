@@ -164,21 +164,21 @@ const FreshGraduate = () => {
         </div>
       </section>
 
-      {/* Quiz Section */}
+      {/* Assessment Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <Card className="max-w-3xl mx-auto border-2 border-primary/20">
             <CardHeader className="text-center">
               <CardTitle className="text-3xl mb-4">Sudah Siap Kerja?</CardTitle>
               <CardDescription className="text-lg">
-                Ikuti quiz interaktif kami untuk mengetahui seberapa siap Anda memasuki dunia kerja
+                Ikuti assessment kesiapan karir untuk mengetahui seberapa siap Anda memasuki dunia kerja
               </CardDescription>
             </CardHeader>
             <CardContent className="text-center">
               <div className="space-y-4 mb-8">
                 <div className="flex items-center justify-center space-x-4">
                   <CheckCircle className="h-6 w-6 text-accent" />
-                  <span>10 pertanyaan interaktif</span>
+                  <span>8 pertanyaan interaktif</span>
                 </div>
                 <div className="flex items-center justify-center space-x-4">
                   <CheckCircle className="h-6 w-6 text-accent" />
@@ -186,12 +186,14 @@ const FreshGraduate = () => {
                 </div>
                 <div className="flex items-center justify-center space-x-4">
                   <CheckCircle className="h-6 w-6 text-accent" />
-                  <span>Gratis dan tanpa registrasi</span>
+                  <span>Tersimpan untuk tracking progress</span>
                 </div>
               </div>
-              <Button size="lg" className="bg-gradient-primary">
-                Mulai Quiz Sekarang
-              </Button>
+              <Link to="/assessment/freshgrad">
+                <Button size="lg" className="bg-gradient-primary">
+                  Mulai Assessment Sekarang
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

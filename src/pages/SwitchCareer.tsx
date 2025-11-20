@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Calendar, Target, Lightbulb, Code, Briefcase, PenTool, DollarSign, BookOpen } from "lucide-react";
+import { TrendingUp, Calendar, Target, Lightbulb, Code, Briefcase, PenTool, DollarSign, BookOpen, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import switchCareerIcon from "@/assets/switch-career-icon.jpg";
 import { supabase } from "@/integrations/supabase/client";
@@ -259,6 +259,41 @@ const SwitchCareer = () => {
               </div>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* Assessment Section */}
+      <section className="py-20 bg-muted">
+        <div className="container mx-auto px-4">
+          <Card className="max-w-3xl mx-auto border-2 border-primary/20">
+            <CardHeader className="text-center">
+              <CardTitle className="text-3xl mb-4">Seberapa Siap Anda Switch Career?</CardTitle>
+              <CardDescription className="text-lg">
+                Ukur kesiapan Anda untuk transisi karir dan dapatkan rekomendasi personal
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="text-center">
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center justify-center space-x-4">
+                  <CheckCircle className="h-6 w-6 text-accent" />
+                  <span>8 pertanyaan terstruktur</span>
+                </div>
+                <div className="flex items-center justify-center space-x-4">
+                  <CheckCircle className="h-6 w-6 text-accent" />
+                  <span>Analisis kesiapan komprehensif</span>
+                </div>
+                <div className="flex items-center justify-center space-x-4">
+                  <CheckCircle className="h-6 w-6 text-accent" />
+                  <span>Roadmap dan action plan personal</span>
+                </div>
+              </div>
+              <Link to="/assessment/careerswitch">
+                <Button size="lg" className="bg-gradient-primary">
+                  Mulai Assessment Sekarang
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
