@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, User, LogOut, LayoutDashboard, Settings } from "lucide-react";
+import { Menu, X, User, LogOut, LayoutDashboard, Settings, BarChart3 } from "lucide-react";
 import logo from "@/assets/logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -86,6 +86,10 @@ const Navbar = () => {
                         <Settings className="h-4 w-4 mr-2" />
                         Kelola Artikel
                       </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => window.location.href = '/admin/assessments'}>
+                        <BarChart3 className="h-4 w-4 mr-2" />
+                        Dashboard Assessment
+                      </DropdownMenuItem>
                     </>
                   )}
                   <DropdownMenuSeparator />
@@ -140,12 +144,20 @@ const Navbar = () => {
                   </Button>
                 </Link>
                 {isAdmin && (
-                  <Link to="/admin/career-guides" onClick={() => setIsOpen(false)}>
-                    <Button variant="outline" className="w-full justify-start">
-                      <Settings className="h-4 w-4 mr-2" />
-                      Kelola Artikel
-                    </Button>
-                  </Link>
+                  <>
+                    <Link to="/admin/career-guides" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" className="w-full justify-start">
+                        <Settings className="h-4 w-4 mr-2" />
+                        Kelola Artikel
+                      </Button>
+                    </Link>
+                    <Link to="/admin/assessments" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" className="w-full justify-start">
+                        <BarChart3 className="h-4 w-4 mr-2" />
+                        Dashboard Assessment
+                      </Button>
+                    </Link>
+                  </>
                 )}
                 <Button
                   variant="outline"
