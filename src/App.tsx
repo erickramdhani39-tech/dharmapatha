@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import AdminCareerGuides from "./pages/AdminCareerGuides";
+import AdminAssessments from "./pages/AdminAssessments";
 import ArticleDetail from "./pages/ArticleDetail";
 import AssessmentFreshGrad from "./pages/AssessmentFreshGrad";
 import AssessmentCareerSwitch from "./pages/AssessmentCareerSwitch";
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/admin/career-guides" element={<AdminCareerGuides />} />
+                <Route path="/admin/assessments" element={<AdminAssessments />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
